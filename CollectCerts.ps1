@@ -31,13 +31,15 @@ License: BSD 3-Clause
 #>
 param ([Parameter(Mandatory)]$Server, [int]$Port=636)
 
+
 try {
+	
 	# Create a TCP client connection to the server
 	$tcpClient = New-Object System.Net.Sockets.TcpClient($Server, $Port)
-
+	
 	# Create an SslStream object to establish a secure connection
-	$sslStream = New-Object System.Net.Security.SslStream($tcpClient.GetStream())
-
+	$sslStream = New-Object System.Net.Security.SslStream($tcpClient.GetStream(), $false, [System.Net.Security.RemoteCertificateValidationCallback]{$true})
+	
 	# Authenticate and establish a secure connection
 	$sslStream.AuthenticateAsClient($Server)
 
@@ -50,6 +52,8 @@ try {
 
 	# Iterate through each certificate in the chain
 	foreach ($cert in $certificates) {
+		
+	
 		# Get the certificate's encoded data
 		$certData = $cert.Certificate.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Cert)
 
@@ -67,3 +71,4 @@ finally {
 	$sslStream.Dispose()
 	$tcpClient.Close()
 }
+
