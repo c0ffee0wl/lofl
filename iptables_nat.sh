@@ -70,6 +70,10 @@ then
     exit 1
 fi
 
+
+sysctl -w net.ipv4.ip_forward=1
+
+
 # Check for each rule whether it exists
 iptables -t nat -C POSTROUTING -o $output -j MASQUERADE >/dev/null 2>&1
 rule1=$?
