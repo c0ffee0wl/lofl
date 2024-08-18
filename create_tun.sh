@@ -116,3 +116,7 @@ if [ $? -ne 0 ]; then
 else
     echo "Tunnel interface creation successful!"
 fi
+
+# Set tunnel up
+ip link set $tunnel up
+
