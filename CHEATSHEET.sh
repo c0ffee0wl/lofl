@@ -24,7 +24,8 @@
 # Obtain tun2socks from https://github.com/xjasonlyu/tun2socks/releases/ (probably you need tun2socks-linux-amd64.zip)
 
 # Living Off the Foreign Land scripts
-git clone https://github.com/bitsadmin/lofl.git
+cd /opt
+git clone https://github.com/c0ffee0wl/lofl.git
 cd lofl
 
 
