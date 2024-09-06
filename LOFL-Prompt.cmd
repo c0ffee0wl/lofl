@@ -4,7 +4,7 @@ cd C:\Tools
 set /p domain= "Domain:   "
 IF not defined domain goto noexit
 
-set "powershellcmd=cd C:\Tools; $DC = (Get-ADDomainController -Server %domain%)[0].Hostname; $PSDefaultParameterValues = @{ '*-AD*:Server'= $DC }; klist"
+set "powershellcmd=cd C:\Tools; $DC = (Get-ADDomainController -Server %domain%)[0].Hostname; $PSDefaultParameterValues = @{ '*-AD*:Server'= $DC }; net start w32time; w32tm /config /update /manualpeerlist:%domain%; w32tm /monitor /computers:%domain%; klist"
 
 for /f "usebackq delims=" %%I in (`powershell "\"%domain%\".toUpper()"`) do set "upper=%%~I"
 for %%a in ("a=A" "b=B" "c=C" "d=D" "e=E" "f=F" "g=G" "h=H" "i=I"
