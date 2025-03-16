@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Add Routes v1.0
+echo "Add Routes v1.1
 @bitsadmin - https://github.com/bitsadmin/lofl
 "
 
@@ -16,8 +16,8 @@ Examples:
   $bn subnets.txt tun1
 
 Example subnet.txt contents
-10.0.10.0/24
-10.0.20.0/24
+10.0.10.0/24    # Domain X
+10.0.20.0/24    # Domain Y
 10.0.30.0/24
 192.168.0.0/16
 "
@@ -37,10 +37,15 @@ interface="$2"
 gateway_ip="${3:-198.18.0.1}"
 
 while IFS= read -r subnet; do
-    if [[ $subnet == \#* ]]; then
+    # Ignore everything behind "#" and trim spaces
+    subnet=$(echo "$subnet" | sed 's/#.*//' | xargs)
+    
+    # Skip empty lines
+    if [[ -z "$subnet" ]]; then
         continue
     fi
-
+    
+    # Construct the command
     command="sudo ip route add $subnet via $gateway_ip dev $interface"
     echo "Adding route: $command"
     eval "$command"
