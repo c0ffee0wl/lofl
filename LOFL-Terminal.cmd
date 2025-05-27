@@ -55,4 +55,3 @@ echo Rubeus.exe asktgt /domain:ad.bitsadmin.com /user:Name /certificate:C:\tmp\U
 echo.
 
 :end
-exit
