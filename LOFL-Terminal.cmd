@@ -40,6 +40,8 @@ runas.exe /netonly /user:%domain%\%user% "powershell.exe -NoExit -Command ls \\%
 REM Rubeus.exe asktgt /domain:%domain% /user:%user% /password:%password% /createnetonly:powershell.exe /show
 
 :commonexit
+REM Allow for seeing errors
+goto end
 exit
 
 :noexit
