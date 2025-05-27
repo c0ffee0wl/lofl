@@ -4,7 +4,7 @@ cd C:\Tools
 set /p domain= "Domain:   "
 IF not defined domain goto noexit
 
-set "powershellcmd=cd C:\Tools; $DC = (Get-ADDomainController -Server %domain%)[0].Hostname; $PSDefaultParameterValues = @{ '*-AD*:Server'= $DC }; net start w32time; w32tm /config /update /manualpeerlist:%domain%; w32tm /monitor /computers:%domain%; klist"
+set "powershellcmd=net start w32time; w32tm /config /update /manualpeerlist:%domain%; w32tm /monitor /computers:%domain%; wt.exe -p 'Windows PowerShell' -d C:\Tools; exit"
 
 for /f "usebackq delims=" %%I in (`powershell "\"%domain%\".toUpper()"`) do set "upper=%%~I"
 for %%a in ("a=A" "b=B" "c=C" "d=D" "e=E" "f=F" "g=G" "h=H" "i=I"
@@ -45,11 +45,12 @@ exit
 :noexit
 echo.
 echo TICKET (TGT) as credential material:
-echo Rubeus.exe createnetonly /domain:sde.inlanefreight.local /username:DC02$ /password:blah /program:powershell.exe /show
+echo Rubeus.exe createnetonly /domain:sde.inlanefreight.local /username:DC02$ /password:blah /program:wt.exe /show
 echo Rubeus.exe ptt /ticket:<base64_or_file-path>
 echo.
 echo CERTIFICATE as credential material:
-echo Rubeus.exe asktgt /domain:ad.bitsadmin.com /user:Name /certificate:C:\tmp\User1.pfx /password:PFXPass1! /createnetonly:powershell.exe /show
+echo Rubeus.exe asktgt /domain:ad.bitsadmin.com /user:Name /certificate:C:\tmp\User1.pfx /password:PFXPass1! /createnetonly:wt.exe /show
 echo.
 
 :end
+exit
