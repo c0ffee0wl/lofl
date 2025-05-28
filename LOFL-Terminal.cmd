@@ -4,7 +4,7 @@ cd C:\Tools
 set /p domain= "Domain:   "
 IF not defined domain goto noexit
 
-set "powershellcmd=net start w32time; w32tm /config /update /manualpeerlist:%domain%; w32tm /monitor /computers:%domain%; wt.exe -p 'Windows PowerShell' -d C:\Tools; exit"
+set "powershellcmd=ls \\%domain%\sysvol; net start w32time; w32tm /config /update /manualpeerlist:%domain%; w32tm /monitor /computers:%domain%; wt.exe -p 'Windows PowerShell' -d C:\Tools; exit"
 
 for /f "usebackq delims=" %%I in (`powershell "\"%domain%\".toUpper()"`) do set "upper=%%~I"
 for %%a in ("a=A" "b=B" "c=C" "d=D" "e=E" "f=F" "g=G" "h=H" "i=I"
@@ -36,7 +36,7 @@ IF defined aes256 (
 )
 
 :password
-runas.exe /netonly /user:%domain%\%user% "powershell.exe -NoExit -Command ls \\%domain%\sysvol; %powershellcmd%"
+runas.exe /netonly /user:%domain%\%user% "powershell.exe -NoExit -Command %powershellcmd%"
 REM Rubeus.exe asktgt /domain:%domain% /user:%user% /password:%password% /createnetonly:powershell.exe /show
 
 :commonexit
